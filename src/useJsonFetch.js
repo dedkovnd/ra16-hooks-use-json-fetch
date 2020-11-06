@@ -1,10 +1,6 @@
 import React,{useState,useEffect} from "react";
 
-// const url = 'http://localhost:7070/data'
-// const err = 'http://localhost:7070/error'
-// const loading = 'http://localhost:7070/loading' - тестовые ссылки
-
-function useJsonFetch(url,opt) {
+export function useJsonFetch(url,opt) {
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const [isLoading, setLoading] = useState(false)
@@ -17,6 +13,7 @@ function useJsonFetch(url,opt) {
                const data = await response.json()
                if (response.ok) {
                    setData(data)
+                   setError(null)
                }
            } catch(e) {
                setError(e)
@@ -30,12 +27,3 @@ function useJsonFetch(url,opt) {
     return[{data,isLoading,error}]
 }
 
-export function TestCustomHook(props){
-    const[{data,isLoading,error}] = useJsonFetch(props,{})
-
-    return (
-        <div>Test
-            {isLoading ? <span>Loading...</span> : <span>{data}</span> || <span>{error}</span>}
-        </div>
-    )
-}
