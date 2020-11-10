@@ -9,11 +9,12 @@ export function useJsonFetch(url,opt) {
        const fetchData = async ()=> {
            setLoading(true)
            try {
-               const response = await fetch(url)
+               const response = await fetch(url,opt = {})
                const data = await response.json()
-               if (response.ok) {
+               if (!response.ok){
+                   setError(data.status)
+               } else {
                    setData(data)
-                   setError(null)
                }
            } catch(e) {
                setError(e)
@@ -23,7 +24,6 @@ export function useJsonFetch(url,opt) {
        };
        fetchData()
     },[url])
-
-    return[{data,isLoading,error}]
+    return[data,isLoading,error]
 }
 
